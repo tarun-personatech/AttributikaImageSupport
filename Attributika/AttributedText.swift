@@ -50,49 +50,53 @@ public protocol AttributedTextProtocol {
 
 extension AttributedTextProtocol {
  func makeAttributedString(getAttributes: (Style) -> [AttributedStringKey: Any]) -> NSAttributedString {
-   let attributedString = NSMutableAttributedString(string: string, attributes: getAttributes(baseStyle))
+  let attributedString = NSMutableAttributedString(string: string, attributes: getAttributes(baseStyle))
 
-   let sortedDetections = detections.sorted {
-    $0.level < $1.level
-   }
-   
-   var map: [NSAttributedString: NSRange] = [:]
-   
-   sortedDetections.forEach { d in
-    let attrs = getAttributes(d.style)
-    if !attrs.isEmpty {
-     attributedString.addAttributes(attrs, range: NSRange(d.range, in: string))
-    }
-    
-    switch d.type {
-     case let .tag(tag) where tag.name == "img":
-
-      let bounds = CGRect(string: tag.attributes["bound"])
-           
-      let attributes = AsynTextAttachmentAttributes(
-       imageName: tag.attributes["id"],
-       imageURL: URL(string: tag.attributes["scr"] ?? ""),
-       origin: bounds?.origin,
-       displaySize: bounds?.size,
-       maximumDisplayWidth: CGFloat(string: tag.attributes["maxWidth"]),
-       radius: CGFloat(string: tag.attributes["radius"])
-      )
-
-      let attachment = AsyncTextAttachment(attributes: attributes)
-      attachment.bounds = CGRect(x: 0, y: 0, width: 25, height: 25)
-      let imageAttributedString = NSMutableAttributedString(attachment: attachment)
-      map[imageAttributedString] = NSRange(d.range, in: attributedString.string)
-    default:
-     break
-    }
-   }
-
-   map.forEach { key, value in
-    attributedString.replaceCharacters(in: value, with: key)
-   }
-
-   return attributedString
+  let sortedDetections = detections.sorted {
+   $0.level < $1.level
   }
+
+  var map: [NSAttributedString: NSRange] = [:]
+
+  sortedDetections.forEach { d in
+   let attrs = getAttributes(d.style)
+   if !attrs.isEmpty {
+    attributedString.addAttributes(attrs, range: NSRange(d.range, in: string))
+   }
+
+   switch d.type {
+   case let .tag(tag) where tag.name == "img":
+
+    let bounds = CGRect(string: tag.attributes["bound"])
+
+    let attributes = AsynTextAttachmentAttributes(
+     imageName: tag.attributes["id"],
+     imageURL: URL(string: tag.attributes["scr"] ?? ""),
+     origin: bounds?.origin,
+     displaySize: bounds?.size,
+     maximumDisplayWidth: CGFloat(string: tag.attributes["maxWidth"]),
+     radius: CGFloat(string: tag.attributes["radius"])
+    )
+
+    let attachment = AsyncTextAttachment(attributes: attributes)
+    let imageAttributedString = NSMutableAttributedString(attachment: attachment)
+     
+     // Don't change original attributedString string here as doing that will ruin the range of other tags/styles
+     // the Just store the range and image attributed string
+    map[imageAttributedString] = NSRange(d.range, in: attributedString.string)
+
+   default:
+    break
+   }
+  }
+
+  // Replace all the ~ with actual image attributed string
+  map.forEach { imageAttrString, range in
+   attributedString.replaceCharacters(in: range, with: imageAttrString)
+  }
+
+  return attributedString
+ }
 }
 
 public final class AttributedText: AttributedTextProtocol {

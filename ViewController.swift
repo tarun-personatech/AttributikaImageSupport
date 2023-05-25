@@ -20,23 +20,23 @@ class ViewController: UIViewController {
  
  private func setupTopLabels() {
   
-  let imageWithUrl40 = "<img scr=\"https://picsum.photos/40\" id=\"scissors\" bound=\"{0,0,25,25}\" radius=\"5\"\" ></img>"
+  let imageWithUrl40 = "<img scr=\"https://picsum.photos/40\" id=\"scissors\" bound=\"{0,-6,25,25}\" radius=\"5\"\" ></img>"
   
-  let imagewithUrl150WithoutRadius = "<img scr=\"https://picsum.photos/150\" id=\"scissors\" bound=\"{0,0,30,30}\"\" ></img>"
+  let imagewithUrl150WithoutRadius = "<img scr=\"https://picsum.photos/150\" id=\"scissors\" bound=\"{0,-10,30,30}\"\" ></img>"
   
-  let imagewithOnlyId = "<img id=\"scissors\" bound=\"{0,0,30,30}\" radius=\"20\"\" ></img>"
+  let imagewithOnlyId = "<img id=\"scissors\" bound=\"{0,-10,30,30}\" radius=\"20\"\" ></img>"
   
-  let imageWithoutUrlWithoutId = "<img bound=\"{0,0,15,15}\" radius=\"2\"\" ></img>"
+  let imageWithoutUrlWithoutId = "<img bound=\"{0,-3,15,15}\" radius=\"2\"\" ></img>"
   
   let message = """
-Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br>\
-\(imageWithUrl40) \
-<button>Need to register?</button>Cras. Nunc.<br>\
-\(imagewithUrl150WithoutRadius) \
-@e2F If only Bradley's arm was longer. Best photo ever.\
-\(imagewithOnlyId) \
+<br>Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br><br>\
+\(imageWithUrl40) - <im>imageWithUrl40</im> <br>\
+\(imagewithUrl150WithoutRadius) - <im>imagewithUrl150WithoutRadius</im> <br>\
+\(imagewithOnlyId) - <im>imagewithOnlyId</im> <br>\
+\(imageWithoutUrlWithoutId) - <im>imageWithoutUrlWithoutId</im><br><br>\
+<button>Need to register?</button> Cras. Nunc.<br>\
+@e2F If only Bradley's arm was longer. Best photo ever.<br>\
 😊 #oscars https://pic.twitter.com/C9U5NOtGap Check this <a href=\"https://github.com/psharanda/Atributika\">link</a> <br>\
-\(imageWithoutUrlWithoutId) elit.<br>\
 @e2F If only Bradley's arm was longer. Best photo ever. 😊 #oscars😊 https://pic.twitter.com/C9U5NOtGap<br>Check this <a href=\"https://github.com/psharanda/Atributika\">link that won't detect click here</a><br>For every retweet this gets, Pedigree will donate one bowl of dog food to dogs in need! 😊 #tweetforbowls
 """
   
@@ -57,11 +57,17 @@ extension String {
       .foregroundColor(.blue, .normal)
       .foregroundColor(.brown, .highlighted)
   
+  let imageName = Style("im")
+      .foregroundColor(.systemPink, .normal)
+  
   let style = self
    .style(
-    tags: [buttonStyle, link],
+    tags: [buttonStyle, imageName, link],
     transformers: [
      TagTransformer.brTransformer,
+     
+     // Replace all the img tag with a ~ so that later when img tag is replaced with an image attachment, other
+     // Style ranges are not shifted
      TagTransformer(tagName: "img", tagType: .start, replaceValue: "~"),
     ]
    )

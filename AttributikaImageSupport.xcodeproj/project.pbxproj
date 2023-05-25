@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F8238E542A1FBD710036C751 /* NSMutableAttributedString+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8238E532A1FBD710036C751 /* NSMutableAttributedString+Image.swift */; };
 		F890F3762A1FAB7F0098D589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F890F3752A1FAB7F0098D589 /* AppDelegate.swift */; };
 		F890F3782A1FAB7F0098D589 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F890F3772A1FAB7F0098D589 /* SceneDelegate.swift */; };
 		F890F37A2A1FAB7F0098D589 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F890F3792A1FAB7F0098D589 /* ViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F8238E532A1FBD710036C751 /* NSMutableAttributedString+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Image.swift"; sourceTree = "<group>"; };
 		F890F3722A1FAB7F0098D589 /* AttributikaImageSupport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AttributikaImageSupport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F890F3752A1FAB7F0098D589 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F890F3772A1FAB7F0098D589 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				F890F38F2A1FABC60098D589 /* AttributedLabel.swift */,
 				F890F3902A1FABC60098D589 /* NSAttributedString+Utils.swift */,
 				F890F3912A1FABC60098D589 /* String+Detection.swift */,
+				F8238E532A1FBD710036C751 /* NSMutableAttributedString+Image.swift */,
 			);
 			path = Attributika;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				F890F3782A1FAB7F0098D589 /* SceneDelegate.swift in Sources */,
 				F890F3952A1FABC60098D589 /* AsyncTextAttachment.swift in Sources */,
 				F890F3962A1FABC60098D589 /* Style.swift in Sources */,
+				F8238E542A1FBD710036C751 /* NSMutableAttributedString+Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
